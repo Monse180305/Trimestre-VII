@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo Supabase</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <p id="frase"></p>
+    <p id="frase2"></p>
+    <p id="frase3"></p>
+    <p id="numero"></p>
+  
+    <div id="audioContainer"></div>
+
+    <script>
+    const supabasePublicClient = supabase.createClient('https://rmruczjhpycreamgrgxm.supabase.co', 
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtcnVjempocHljcmVhbWdyZ3htIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4OTg4NTksImV4cCI6MjA3NzQ3NDg1OX0.NEZHRdzLXUhY8Lotmp2vZAIQsdYx0Vq6dNLEYkSfiyY',{
+
+    db:{
+        schema:"public"
+    }
+    });
+
+    (async () => {
+        const response = await supabasePublicClient.from ('proyectoEJEVII').select("*")
+        console.log(response.data[1].frase)
+        document.getElementById("frase").innerHTML = response.data[0].frase
+        document.getElementById("frase2").innerHTML = response.data[1].frase
+        document.getElementById("frase3").innerHTML = response.data[2].frase
+
+        document.getElementById("numero").innerHTML = response.data[0].coloR
+
+       const response2 = await supabasePublicClient.storage.from('videos').getPublicUrl("audio_prueba_supabase.mp3")
+        console.log(response2.data.publicUrl) 
+
+        const audioElement = document.createElement('audio')
+        audioElement.src= response2.data.publicUrl
+        audioElement.play()
+        document.getElementById('audioContainer').appendChild(audioElement)
+
+    })()
+    </script>
+</body>
+</html>
