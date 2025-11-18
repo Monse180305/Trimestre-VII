@@ -12,7 +12,7 @@
     <p id="frase3"></p>
     <p id="numero"></p>
   
-    <div id="audioContainer"></div>
+    <div id="imgContainer"></div>
 
     <script>
     const supabasePublicClient = supabase.createClient('https://rmruczjhpycreamgrgxm.supabase.co', 
@@ -32,13 +32,13 @@
 
         document.getElementById("numero").innerHTML = response.data[0].coloR
 
-       const response2 = await supabasePublicClient.storage.from('videos').getPublicUrl("audio_prueba_supabase.mp3")
+       const response2 = await supabasePublicClient.storage.from('videos').getPublicUrl("prueba-imagen.JPG")
         console.log(response2.data.publicUrl) 
 
-        const audioElement = document.createElement('audio')
-        audioElement.src= response2.data.publicUrl
-        audioElement.play()
-        document.getElementById('audioContainer').appendChild(audioElement)
+        const imgElement = document.createElement('img')
+        imgElement.src= response2.data.publicUrl
+        imgElement.width = 400
+        document.getElementById('imgContainer').appendChild(imgElement)
 
     })()
     </script>
